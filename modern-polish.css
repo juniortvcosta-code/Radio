@@ -1,0 +1,401 @@
+:root {
+  --bg-deep: #07080b;
+  --bg-surface: #10131a;
+  --bg-card: #171922;
+  --bg-glass: rgba(18, 20, 29, 0.72);
+  --gold: #f0ba57;
+  --gold-light: #ffd982;
+  --gold-dim: #8f6a2a;
+  --wine: #c7334f;
+  --wine-light: #f45f7a;
+  --cream: #fff4de;
+  --cream-dim: #b9ad99;
+  --cream-faint: rgba(255, 244, 222, 0.14);
+  --hairline: rgba(240, 186, 87, 0.24);
+}
+
+body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.voz-page {
+  background:
+    radial-gradient(circle at 50% -15%, rgba(240, 186, 87, 0.22), transparent 34%),
+    radial-gradient(circle at 85% 18%, rgba(199, 51, 79, 0.24), transparent 28%),
+    radial-gradient(circle at 14% 76%, rgba(43, 131, 128, 0.18), transparent 30%),
+    linear-gradient(180deg, #10131a 0%, #08090d 56%, #050609 100%);
+}
+
+.voz-content {
+  width: min(1120px, calc(100% - 32px));
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+  grid-template-areas:
+    "header record"
+    "player record"
+    "divider divider"
+    "about about"
+    "footer footer";
+  gap: 20px 42px;
+  align-items: center;
+  min-height: 100vh;
+  padding: 34px 0 0;
+}
+
+.voz-header {
+  grid-area: header;
+  text-align: left;
+  padding: 0;
+}
+
+.voz-header::after {
+  margin: 24px 0 0;
+  width: 86px;
+  height: 3px;
+  border-radius: 999px;
+}
+
+.voz-eyebrow,
+.now-playing-label,
+.live-badge,
+.voz-footer {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.voz-eyebrow {
+  letter-spacing: 0.18em;
+  font-size: 0.73rem;
+}
+
+.voz-title {
+  font-size: clamp(4.2rem, 10vw, 9rem);
+  letter-spacing: -0.055em;
+  line-height: 0.86;
+  text-wrap: balance;
+}
+
+.voz-title em {
+  text-shadow: 0 0 26px rgba(240, 186, 87, 0.24);
+}
+
+.voz-title span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.8em;
+  min-height: 1.05em;
+  margin-left: 0.08em;
+  padding: 0.03em 0.14em 0.06em;
+  color: #11131a;
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  border-radius: 0.16em;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 0.34em;
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1;
+  vertical-align: 0.22em;
+  box-shadow: 0 16px 40px rgba(240, 186, 87, 0.22);
+}
+
+.voz-tagline {
+  max-width: 460px;
+  margin-top: 22px;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(1rem, 2vw, 1.22rem);
+  font-style: normal;
+  line-height: 1.7;
+}
+
+.vinyl-wrap {
+  grid-area: record;
+  min-height: 560px;
+  padding: 0;
+  perspective: 1000px;
+}
+
+.vinyl-wrap::before {
+  content: "";
+  position: absolute;
+  width: min(78vw, 380px);
+  aspect-ratio: 1;
+  border: 1px solid rgba(240, 186, 87, 0.22);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255, 244, 222, 0.12), transparent 32%),
+    radial-gradient(circle at 70% 20%, rgba(199, 51, 79, 0.32), transparent 35%),
+    linear-gradient(135deg, rgba(240, 186, 87, 0.18), rgba(16, 19, 26, 0.98));
+  transform: translate(-28px, 10px);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+}
+
+.vinyl-glow {
+  width: min(82vw, 480px);
+  height: min(82vw, 480px);
+  opacity: 0.9;
+  animation: longplayGlow 4.8s ease-in-out infinite;
+}
+
+.vinyl-record {
+  width: min(72vw, 390px);
+  height: min(72vw, 390px);
+  transform: rotateX(6deg) rotateY(-12deg);
+  animation: spin-record 8s linear infinite;
+  box-shadow:
+    0 0 0 1px rgba(240, 186, 87, 0.22),
+    0 0 0 10px #050506,
+    0 36px 95px rgba(0, 0, 0, 0.72),
+    -18px 22px 52px rgba(199, 51, 79, 0.2);
+}
+
+.vinyl-record::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(120deg, transparent 8%, rgba(255, 255, 255, 0.2) 14%, transparent 22%, transparent 58%, rgba(255, 255, 255, 0.08) 66%, transparent 76%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.vinyl-record::after {
+  content: "";
+  position: absolute;
+  inset: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.vinyl-record.spinning,
+.voz-page.is-playing .vinyl-record {
+  animation-duration: 3.8s;
+}
+
+.voz-page.is-playing .vinyl-glow {
+  animation: longplayGlow 1.8s ease-in-out infinite;
+}
+
+.vinyl-label {
+  width: min(25vw, 122px);
+  height: min(25vw, 122px);
+}
+
+.vinyl-label-name {
+  font-size: 0.68rem;
+}
+
+.voz-player {
+  grid-area: player;
+  align-items: flex-start;
+  max-width: 460px;
+  margin: 0;
+  border-radius: 18px;
+}
+
+.play-btn {
+  width: 78px;
+  height: 78px;
+}
+
+.pause-icon {
+  display: none;
+}
+
+.voz-page.is-playing .play-icon {
+  display: none;
+}
+
+.voz-page.is-playing .pause-icon {
+  display: block;
+}
+
+.voz-page.is-playing .play-btn {
+  border-color: var(--gold);
+  box-shadow: 0 14px 42px rgba(240, 186, 87, 0.3), inset 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.voz-page.is-playing .live-dot {
+  background: #42db89;
+  box-shadow: 0 0 12px rgba(66, 219, 137, 0.8);
+  animation: blink-live 1.2s ease-in-out infinite;
+}
+
+.now-playing-section {
+  grid-area: now;
+  display: none;
+  text-align: left;
+  margin: 0;
+  padding: 0;
+}
+
+.now-playing-track {
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+}
+
+.ornate-divider {
+  grid-area: divider;
+  width: 100%;
+  margin: 18px auto 0;
+}
+
+.about-section {
+  grid-area: about;
+  max-width: none;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  margin: 0;
+  padding: 30px;
+  text-align: left;
+  background: rgba(255, 244, 222, 0.045);
+  border: 1px solid rgba(240, 186, 87, 0.16);
+  border-radius: 18px;
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.24);
+}
+
+.about-title {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+}
+
+.about-text {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+.voz-footer {
+  grid-area: footer;
+  width: 100%;
+  margin-top: 14px;
+}
+
+@keyframes longplayFloat {
+  0%, 100% {
+    transform: rotateX(6deg) rotateY(-12deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(8deg) rotateY(-7deg) translateY(-14px);
+  }
+}
+
+@keyframes longplayGlow {
+  0%, 100% {
+    opacity: 0.68;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.07);
+  }
+}
+
+@media (max-width: 860px) {
+  .voz-content {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "record"
+      "player"
+      "divider"
+      "about"
+      "footer";
+    gap: 26px;
+  }
+
+  .voz-header,
+  .now-playing-section {
+    text-align: center;
+  }
+
+  .voz-header::after {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vinyl-wrap {
+    min-height: 390px;
+  }
+
+  .voz-player {
+    align-items: center;
+    margin: 0 auto;
+    width: min(100%, 460px);
+  }
+
+  .about-section {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .voz-content {
+    width: min(100% - 22px, 1120px);
+    gap: 20px;
+    padding-top: 22px;
+  }
+
+  .voz-title {
+    font-size: clamp(3rem, 16vw, 4.6rem);
+    line-height: 0.92;
+  }
+
+  .voz-title span {
+    margin-left: 0.04em;
+    font-size: 0.38em;
+    vertical-align: 0.18em;
+  }
+
+  .vinyl-wrap {
+    min-height: 300px;
+  }
+
+  .vinyl-wrap::before {
+    width: min(84vw, 300px);
+    border-radius: 18px;
+    transform: translate(-12px, 6px);
+  }
+
+  .vinyl-record {
+    width: min(70vw, 250px);
+    height: min(70vw, 250px);
+  }
+
+  .vinyl-label {
+    width: min(24vw, 76px);
+    height: min(24vw, 76px);
+  }
+
+  .vinyl-label-name {
+    font-size: 0.48rem;
+  }
+
+  .voz-player {
+    width: 100%;
+    padding: 1.35rem;
+    border-radius: 16px;
+  }
+
+  .live-badge {
+    max-width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .about-section {
+    padding: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vinyl-record,
+  .vinyl-glow,
+  .voz-page.is-playing .vinyl-record,
+  .voz-page.is-playing .vinyl-glow,
+  .voz-page.is-playing .live-dot {
+    animation: none;
+  }
+}
